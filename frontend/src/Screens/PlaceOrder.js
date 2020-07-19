@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CheckOutSteps from '../components/CheckOutSteps'
+import CheckoutSteps from '../components/CheckOutSteps';
 import { createOrder } from '../actions/orderActions';
 function PlaceOrderScreen(props) {
 
   const cart = useSelector(state => state.cart);
   const orderCreate = useSelector(state => state.orderCreate);
+  
   const { loading, success, error, order } = orderCreate;
+
 
   const { cartItems, shipping, payment } = cart;
   if (!shipping.address) {
@@ -29,12 +31,11 @@ function PlaceOrderScreen(props) {
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
     }));
-    
   }
   useEffect(() => {
-
     if (success) {
-      props.history.push("/order/" + order._id);
+        console.log(orderCreate);
+        props.history.push("/order/" + order.data._id);
     }
 
   }, [success]);
@@ -44,7 +45,7 @@ function PlaceOrderScreen(props) {
   }
 
   return <div>
-    <CheckOutSteps step1 step2 step3 step4 ></CheckOutSteps>
+    <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
     <div className="placeorder">
       <div className="placeorder-info">
         <div>
@@ -79,7 +80,7 @@ function PlaceOrderScreen(props) {
           </div>
                 :
                 cartItems.map(item =>
-                  <li>
+                  <li key={item._id}>
                     <div className="cart-image">
                       <img src={item.image} alt="product" />
                     </div>

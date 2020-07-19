@@ -7,7 +7,7 @@ function ShippingScreen(props) {
 
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
-  const [postalcode, setPostalCode] = useState('');
+  const [postalCode, setpostalCode] = useState('');
   const [country, setCountry] = useState('');
   
   const dispatch = useDispatch();
@@ -15,7 +15,8 @@ function ShippingScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShipping({address,city,postalcode,city}));
+    console.log(postalCode,country)
+    dispatch(saveShipping({address,city,postalCode,country}));
     props.history.push("payment");
   }
   return <div>
@@ -42,15 +43,17 @@ function ShippingScreen(props) {
           </input>
         </li>
         <li>
-          <label htmlFor="postalcode">postalcode</label>
-          <input type="text" id="postalcode" name="postalcode" onChange={(e) => setPostalCode(e.target.value)}>
+          <label htmlFor="postalCode">postalCode</label>
+          <input type="text" id="postalCode" name="postalCode" onChange={(e) => setpostalCode(e.target.value)}>
           </input>
         </li>
         <li>
-          <label htmlFor="country">Country</label>
-          <input type="text" id="country" name="country" onChange={(e) => setCountry(e.target.value)}>
-          </input>
-        </li>
+        <label htmlFor="country">
+              Country
+          </label>
+            <input type="text" name="country" id="country" onChange={(e) => setCountry(e.target.value)}>
+            </input>
+            </li>
         <li>
           <button type="submit" className="button primary">Continue</button>
         </li>
