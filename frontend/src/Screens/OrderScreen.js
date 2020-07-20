@@ -118,19 +118,19 @@ function OrderScreen(props) {
             </li>
             <li>
               <div>Items</div>
-              <div>${order.itemsPrice}</div>
+              <div>INR : {order.itemsPrice}</div>
             </li>
             <li>
               <div>Shipping</div>
-              <div>${order.shippingPrice}</div>
+              <div>INR : {order.shippingPrice}</div>
             </li>
             <li>
               <div>Tax</div>
-              <div>${order.taxPrice}</div>
+              <div>INR : {order.taxPrice}</div>
             </li>
             <li>
               <div>Order Total</div>
-              <div>${order.totalPrice}</div>
+              <div>INR : {order.totalPrice}</div>
             </li>
           </ul>
 

@@ -12,6 +12,19 @@ router.get("/:id", isAuth, async (req, res) => {
     res.status(404).send("Order Not Found.")
   }
 });
+router.get("/mine", isAuth, async (req, res) => {
+  try {
+    console.log(req);
+  const orders = await Order.findById({ user: req.user.id });
+  res.send(orders);
+    
+  } catch (error) {
+    res.status(500).send({message:error.message})
+    
+  }
+})
+
+
 
 router.post("/", isAuth, async (req, res) => {
   const newOrder = new Order({
