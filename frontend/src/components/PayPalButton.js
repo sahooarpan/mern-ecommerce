@@ -9,7 +9,7 @@ function PaypalButton(props) {
     const clientID = result.data;
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}&currency=INR`;
+    script.src = `https://www.paypal.com/sdk/js?client-id=INR{clientID}&currency=INR`;
     script.async = true;
     script.onload = () => {
       setSdkReady(true);

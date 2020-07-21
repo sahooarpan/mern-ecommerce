@@ -7,15 +7,58 @@ import { listProducts } from '../actions/productActions'
 
 function HomeScreen(props) {
 
+  const [searchKey,setSearchKey] = useState('');
+  const [sortOrder,setSortOrder] = useState('');
+  const category = props.match.params.id?props.match.params.id:"";
   const productList = useSelector(state=>state.productList);
   const { products,loading,error } = productList;
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(listProducts());
-  },[])
+    dispatch(listProducts(category));
+  },[category])
 
-  return loading?<div className="text-center">Loading....</div>:
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    dispatch(listProducts(category,searchKey,sortOrder))
+  }
+
+  const sortHandler=(e)=>{
+    setSortOrder(e.target.value);
+    dispatch(listProducts(category,searchKey,sortOrder))
+  }
+
+  return<>
+{category && <h2>{category}</h2>}
+<ul className="filter">
+  <li>
+    <form onSubmit={handleSubmit}>
+    <input name="searchKey" onChange={e=>setSearchKey(e.target.value)} />  
+    <button type="submit">Search</button>
+    </form>
+  </li>
+
+  <li>
+    Sort By {" "}
+    <select name="sortOrder" onChange={sortHandler}>
+      <option value="">
+        Newest
+
+      </option>
+      <option value="lowest">
+        Lowest
+
+      </option>
+      <option value="highest">
+        Highest
+
+      </option>
+    </select>
+  </li>
+
+</ul>
+ {loading?<div className="text-center">Loading....</div>:
 error?<div>{error}</div>:
   <ul className="products">
     {
@@ -30,14 +73,16 @@ error?<div>{error}</div>:
               <Link to={'/product/' + product._id}>{product.name}</Link>
             </div>
             <div className="product-brand">{product.brand}</div>
-            <div className="product-price">${product.price}</div>
+            <div className="product-price">INR{product.price}</div>
             <div className="product-rating">{product.rating} Stars ({product.numReiews} Reviews)</div>
           </div>
         </li>)
     }
 
 
-
+ 
   </ul>
+}
+  </>
 }
 export default HomeScreen;

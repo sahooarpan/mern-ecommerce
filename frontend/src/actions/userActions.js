@@ -26,7 +26,7 @@ export const update=({userId,name,email,password})=>async (dispatch,getState)=>{
         
         dispatch({type:USER_UPDATE_REQUEST,payload:{userId,name,email,password}});
         const {userSignIn:{userInfo}}=getState();
-        const { data } = await Axios.put(`/api/users/${userId}`,{name,email,password},{
+        const { data } = await Axios.put(`/api/users/INR{userId}`,{name,email,password},{
             headers:{
                 Authorization:'Bearer ' + userInfo.token
             }

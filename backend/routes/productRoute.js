@@ -5,10 +5,20 @@ import { isAuth, isAdmin } from '../util';
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const products = await Product.find({});
+  const category = req.query.category ? { category: req.query.category } : {};
+  const searchKeyword = req.query.searchKeyword ? {
+    name: {
+      $regex: req.query.searchKeyword,
+      $options: 'i'
+    }
+  } : {};
+  const sortOrder = req.query.sortOrder ?
+    (req.query.sortOrder === 'lowest' ? { price: -1 } : { price: 1 })
+    :
+    { _id: -1 };
+  const products = await Product.find({ ...category, ...searchKeyword }).sort(sortOrder);
   res.send(products);
 });
-
 router.get("/:id", async (req, res) => {
   const product = await Product.findOne({ _id: req.params.id });
   if (product) {
@@ -26,11 +36,12 @@ router.put("/:id", isAuth, isAdmin, async (req, res) => {
     product.price = req.body.price;
     product.image = req.body.image;
     product.brand = req.body.brand;
-    product.category = req.body.category;
+    product.category = req.body.category.trim("");
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
     const updatedProduct = await product.save();
     if (updatedProduct) {
+      console.log(updatedProduct)
       return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
     }
   }
@@ -62,7 +73,9 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
     numReviews: req.body.numReviews,
   });
   const newProduct = await product.save();
+  
   if (newProduct) {
+    console.log(newProduct);
     return res.status(201).send({ message: 'New Product Created', data: newProduct });
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });

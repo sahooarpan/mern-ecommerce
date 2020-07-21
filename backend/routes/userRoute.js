@@ -2,9 +2,6 @@ import express from 'express';
 import User from '../models/userModel'
 import { getToken,isAuth } from '../util';
 
-
-
-
 const router = express.Router();
 
 router.post('/register',async(req,res)=>{
@@ -87,12 +84,13 @@ router.post('/signin', async (req, res) => {
 router.get('/createAdmin',async(req,res)=>{
     try {
         const user = new User({
-            name:'Arpan',
-            email:'sahoo.arpan7@gmail.com',
-            password:'1234',
+            name:'dravid',
+            email:'dravid7@gmail.com',
+            password:'12347',
             isAdmin:true
         });
         const newUser = await user.save();
+        console.log(newUser)
         res.send(newUser)
     } catch (error) {
         res.send({msg:error.message})

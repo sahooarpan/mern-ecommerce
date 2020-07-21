@@ -68,7 +68,7 @@ function CartScreen(props) {
                   </div>
                 </div>
                 <div className="cart-price">
-                  ${item.price}
+                  INR{item.price}
                 </div>
               </li>
             )
