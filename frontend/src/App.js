@@ -76,7 +76,9 @@ function App() {
             <li>
               <Link to="/category/Mens">Mens</Link>
             </li>
-
+            <li>
+            <Link to="/category/Womens">Womens</Link>
+            </li>
             <li>
             <Link to="/category/Cricket">Cricket</Link>
             </li>

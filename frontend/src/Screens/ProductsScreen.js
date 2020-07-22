@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveProduct, listProducts, deleteProdcut } from '../actions/productActions';
+import axios from 'axios'
+
 
 function ProductsScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState('');
+  const [uploading,setUploading] = useState(false);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
@@ -56,6 +59,26 @@ function ProductsScreen(props) {
   const deleteHandler = (product) => {
     dispatch(deleteProdcut(product._id));
   }
+
+  const uploadFileHandler =(e)=>{
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image',file);
+    setUploading(true);
+    axios.post('/api/uploads',formData,{
+      headers:{
+        'Content-Type':'multipart/form-data',
+      },
+    }).then((res)=>{
+      setImage(res.data)
+      setUploading(false)
+    }).catch(err=>{
+      console.log(err)
+      setUploading(false)
+    })
+  }
+
+
   return <div className="content content-margined">
 
     <div className="product-header">
@@ -94,6 +117,8 @@ function ProductsScreen(props) {
           </label>
               <input type="text" name="image" value={image} id="image" onChange={(e) => setImage(e.target.value)}>
               </input>
+              <input type="file" onChange={uploadFileHandler}></input>
+              {uploading && <div>Uploading...</div>}
             </li>
             <li>
               <label htmlFor="brand">

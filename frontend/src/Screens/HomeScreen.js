@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useSelector,useDispatch } from 'react-redux'
 import { listProducts } from '../actions/productActions'
+import Review from '../components/Rating'
+import Rating from '../components/Rating';
 
 
 function HomeScreen(props) {
@@ -74,7 +76,9 @@ error?<div>{error}</div>:
             </div>
             <div className="product-brand">{product.brand}</div>
             <div className="product-price">INR{product.price}</div>
-            <div className="product-rating">{product.rating} Stars ({product.numReiews} Reviews)</div>
+            <div className="product-rating">
+              <Rating value={product.rating} text={product.numReviews+ ' reviews'} />
+            </div>
           </div>
         </li>)
     }
