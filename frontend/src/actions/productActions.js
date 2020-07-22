@@ -103,6 +103,7 @@ import {
           userInfo: { token },
         },
       } = getState();
+      console.log(review,token,productId)
       dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });
       const { data } = await axios.post(
         `/api/products/${productId}/reviews`,
@@ -113,6 +114,7 @@ import {
           },
         }
       );
+      console.log(data);
       dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: data });
     } catch (error) {
       // report error

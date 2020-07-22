@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct , saveProductReview } from '../actions/productActions';
+import { detailsProduct, saveProductReview } from '../actions/productActions';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../actions/types';
 
@@ -118,9 +118,9 @@ function ProductScreen(props) {
           </div>
           <div className="content-margined">
             <h2>Reviews</h2>
-            {!product.reviews.length && <div>There is no review</div>}
+            { product.reviews && !product.reviews.length && <div>There is no review</div>}
             <ul className="review" id="reviews">
-              {product && product.reviews &&  product.reviews.map((review) => (
+              { product.reviews && product.reviews.map((review) => (
                 <li key={review._id}>
                   <div>{review.name}</div>
                   <div>
