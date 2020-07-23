@@ -5,6 +5,7 @@ dist
 /dist
 node_modules
 /node_modules
+config/default.json
 uploads/*.jpg
 uploads/*.png
 

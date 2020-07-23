@@ -9,7 +9,7 @@ function PaypalButton(props) {
     const clientID = result.data;
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = `https://www.paypal.com/sdk/js?client-id=INR{clientID}&currency=INR`;
+    script.src = 'https://www.paypal.com/sdk/js?client-id=' + clientID;
     script.async = true;
     script.onload = () => {
       setSdkReady(true);
@@ -17,12 +17,11 @@ function PaypalButton(props) {
     document.body.appendChild(script);
   }
 
-  
   const createOrder = (data, actions) => actions.order.create({
     purchase_units: [
       {
         amount: {
-          currency_code: 'INR',
+          currency_code: 'USD',
           value: props.amount
         }
       }

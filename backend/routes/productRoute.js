@@ -90,7 +90,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
     price: req.body.price,
     image: req.body.image,
     brand: req.body.brand,
-    category: req.body.category,
+    category: req.body.category.trim(""),
     countInStock: req.body.countInStock,
     description: req.body.description,
     rating: req.body.rating,
