@@ -5,7 +5,6 @@ import { isAuth, isAdmin } from '../util';
 const router = express.Router();
 
 router.get("/", isAuth, async (req, res) => {
-  
   const orders = await Order.find({}).populate('user');
   res.send(orders);
 });
@@ -34,9 +33,10 @@ router.delete("/:id", isAuth, isAdmin, async (req, res) => {
 });
 
 router.post("/", isAuth, async (req, res) => {
+  console.log(req.user)
   const newOrder = new Order({
     orderItems: req.body.orderItems,
-    user: req.user._id,
+    user: req.user.id,
     shipping: req.body.shipping,
     payment: req.body.payment,
     itemsPrice: req.body.itemsPrice,
